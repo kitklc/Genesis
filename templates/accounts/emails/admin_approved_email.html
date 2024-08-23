@@ -1,0 +1,13 @@
+{% autoescape off %}
+
+Bonjour {{user.first_name}},
+
+{% if is_approved %}
+Félicitations ! Votre restaurant a été approuvé par notre Comité de Gestion. --Claude Kit - CEO
+{% else %}
+Nous sommes désolés ! Vous ne pouvez pas publier vos articles sur Genesis. Pour plus de détails, veuillez contacter support@klc.com. --Equipe support
+{% endif %}
+
+
+
+{% endautoescape %}
