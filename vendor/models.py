@@ -3,7 +3,7 @@ from accounts.models import User, UserProfile
 from accounts.utils import send_notification
 
 # Create your models here.
-class vendor(models.Model):
+class Vendor(models.Model):
     user= models.OneToOneField(User,related_name='user',on_delete=models.CASCADE)
     user_profile= models.OneToOneField(UserProfile,related_name='userprofile',on_delete=models.CASCADE)
     vendor_name=models.CharField(max_length=50)
@@ -18,7 +18,7 @@ class vendor(models.Model):
     def save(self, *args, **kwargs):
         if self.pk is not None:
             # update 
-            orig =vendor.objects.get(pk=self.pk)
+            orig =Vendor.objects.get(pk=self.pk)
             if orig.is_approved != self.is_approved:
                 mail_template = 'accounts/emails/admin_approved_email.html'
                 context = {
@@ -35,4 +35,4 @@ class vendor(models.Model):
                     mail_subject = "Nous sommes désolés ! votre société n'est pas éligible pour publier vos articles sur Genesis."
                     send_notification(mail_subject, mail_template, context)
                     
-        return super(vendor, self).save(*args, **kwargs)   # super function is allow to save method Vendor class 
+        return super(Vendor, self).save(*args, **kwargs)   # super function is allow to save method Vendor class 

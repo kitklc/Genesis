@@ -1,5 +1,5 @@
 from django.contrib import admin
-from vendor.models import vendor
+from vendor.models import Vendor
 
 class VendorAdmin(admin.ModelAdmin):
     list_display = ('user', 'vendor_name', 'is_approved', 'created_at')
@@ -7,4 +7,4 @@ class VendorAdmin(admin.ModelAdmin):
     list_editable = ('is_approved',)
 
 # Register your models here.
-admin.site.register(vendor,VendorAdmin)
+admin.site.register(Vendor,VendorAdmin)
