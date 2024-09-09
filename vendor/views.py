@@ -118,13 +118,12 @@ def edit_category(request, pk=None):
             print(form.errors)
 
     else:
-        form = CategoryForm(instance=category)
-        form.fields['category'].queryset = Category.objects.filter(vendor=get_vendor(request))
+        form = CategoryForm(instance=category) 
     context = {
         'form': form,
-        'category': category,
+        'category' : category,
     }
-    return render(request, 'vendor/edit_category.html', context)
+    return render(request, 'vendor/edit_category.html',context)
 
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
