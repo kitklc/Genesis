@@ -29,6 +29,8 @@ urlpatterns = [
     
      #cart
     path('cart/', Marketplaceviews.cart, name='cart'),
+    # SEARCH
+    path('search/', Marketplaceviews.search, name='search'),
     
     
 ] + static (settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

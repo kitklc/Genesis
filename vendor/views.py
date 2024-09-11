@@ -112,7 +112,7 @@ def edit_category(request, pk=None):
             category.vendor = get_vendor(request)
             category.slug = slugify(category_name)
             form.save()
-            messages.success(request, 'Category updated successfully!')
+            messages.success(request, 'Categorie mis à jour!')
             return redirect('menu_builder')
         else:
             print(form.errors)
@@ -130,7 +130,7 @@ def edit_category(request, pk=None):
 def delete_category(request, pk=None):
     category = get_object_or_404(Category, pk=pk)
     category.delete()
-    messages.success(request, 'Category has been deleted successfully!')
+    messages.success(request, 'La catégorie a été supprimée!')
     return redirect('menu_builder')
 
 
