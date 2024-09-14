@@ -161,7 +161,7 @@ EMAIL_HOST_PASSWORD= 'nbgr komu vouv iwsy'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Malewa Ya congo <claude.kitenge@gmail.com>'
 
-GOOGLE_API_KEY = 'AIzaSyDOxbs0VkwrG4Jtquz4ZNPCwyJXppqn-nw'
+GOOGLE_API_KEY = ''
 
 
 os.environ['PATH'] = os.path.join(BASE_DIR, 'env\Lib\site-packages\osgeo') + ';' + os.environ['PATH']
