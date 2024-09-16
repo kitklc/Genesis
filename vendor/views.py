@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404,redirect
+from django.shortcuts import get_object_or_404,redirect, render
 from .forms import VendorForm,OpeningHourForm
 from accounts.forms import UserProfileForm
 from accounts.models import UserProfile
@@ -50,7 +50,6 @@ def vprofile(request):
 
     }
     
-
     return render(request,'vendor/vprofile.html',context)
 
 @login_required(login_url='login')

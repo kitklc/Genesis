@@ -72,6 +72,7 @@ TEMPLATES = [
                 'accounts.context_processors.get_google_api',
                 'marketplace.context_processors.get_cart_counter',
                 'marketplace.context_processors.get_cart_amounts',
+                'accounts.context_processors.get_user_profile',
             ],
         },
     },
@@ -141,7 +142,7 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / 'media/'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -157,11 +158,11 @@ EMAIL_BACKEND = config('EMAIL_BACKEND')
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT',cast=int)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD= 'nbgr komu vouv iwsy' 
+EMAIL_HOST_PASSWORD= 'HOOOOOOOOOOOOOOOOOOOOOOOOO' 
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = '>'
+DEFAULT_FROM_EMAIL = 'HOOOOOOOOOOOOOOOOOOOOOOO'
 
-GOOGLE_API_KEY = ''
+GOOGLE_API_KEY = 'HOOOOOOOOOOOOOOOOOOOOOOOOOOO'
 
 
 os.environ['PATH'] = os.path.join(BASE_DIR, 'env\Lib\site-packages\osgeo') + ';' + os.environ['PATH']

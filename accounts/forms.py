@@ -18,11 +18,11 @@ class UserForm(forms.ModelForm):
         
         if password != confirm_password:
             raise forms.ValidationError(
-                'Mot de passe ekokani te, bandela !'
+                'Les mots de passe ne correspondent pas !'
             )
 
 class UserProfileForm(forms.ModelForm):
-    address = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Start typing...', 'required': 'required'}))
+    address = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'commencer à taper ...', 'required': 'required'}))
     profile_picture = forms.FileField(widget=forms.FileInput(attrs={'class': 'btn btn-info'}),validators=[allow_only_images_validator])
     cover_photo = forms.FileField(widget=forms.FileInput(attrs={'class': 'btn btn-info'}),validators=[allow_only_images_validator])
     
