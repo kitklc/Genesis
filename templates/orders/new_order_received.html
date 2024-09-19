@@ -1,0 +1,9 @@
+{% autoescape off %}
+
+Bonjour {{user.First_name}},
+Vous avez reçu une nouvelle commane : 
+{{ order.order_number}}
+http://{{domain}}{% url "activate" uidb64=uid token=token %}
+
+
+{% endautoescape %}
