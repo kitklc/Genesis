@@ -198,7 +198,7 @@
             },
             success: function(response){
                 console.log('response==>', response)
-                window.location.href = order_complete + '?order_no=' + encodeURIComponent(response.order_number) + '&trans_id=' + encodeURIComponent(response.transaction_id);
+                window.location.href = order_complete +'?order_no='+response.order_number+'&trans_id='+response.transaction_id
             }
         })
     }

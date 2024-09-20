@@ -1,3 +1,4 @@
+from urllib import response
 from django.http import HttpResponse,JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -10,6 +11,9 @@ import simplejson as json
 from .utils import generate_order_number
 from accounts.utils import send_notification
 from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
 
 # Create your views here.
 @login_required(login_url='login')
@@ -103,7 +107,7 @@ def payments(request):
         customer_subtotal = 0
         for item in ordered_food:
             customer_subtotal += (item.price * item.quantity)
-        tax_data = json.loads(order.tax_data)
+        
         context = {
             'user': request.user,
             'order': order,
@@ -111,7 +115,7 @@ def payments(request):
             'ordered_food': ordered_food,
             'domain': get_current_site(request),
             'customer_subtotal': customer_subtotal,
-            'tax_data': tax_data,
+            
         }
         send_notification(mail_subject, mail_template, context)
         
@@ -120,17 +124,25 @@ def payments(request):
         mail_subject = 'You have received a new order.'
         mail_template = 'orders/new_order_received.html'
         to_emails = []
+        
         for i in cart_items:
             if i.fooditem.vendor.user.email not in to_emails:
                 to_emails.append(i.fooditem.vendor.user.email)
 
                 ordered_food_to_vendor = OrderedFood.objects.filter(order=order, fooditem__vendor=i.fooditem.vendor)
-                print(ordered_food_to_vendor)
+                # Generate uidb64 and token for activation link
+                uidb64 = urlsafe_base64_encode(force_bytes(i.fooditem.vendor.user.pk))
+                token = default_token_generator.make_token(i.fooditem.vendor.user)
+
 
         
                 context = {
                     'order': order,
                     'to_email': i.fooditem.vendor.user.email,
+                    'ordered_food': ordered_food_to_vendor,
+                    'domain': get_current_site(request),
+                    'uid': uidb64,
+                    'token': token,
                     
                     
                 }
@@ -140,13 +152,45 @@ def payments(request):
         # cart_items.delete() 
 
         # RETURN BACK TO AJAX WITH THE STATUS SUCCESS OR FAILURE
-        
-        return HttpResponse('data sent')
+        response = {
+              
+            'order_number': order_number,
+            'transaction_id': transaction_id,
+        }
+        return JsonResponse(response)
     return HttpResponse('Payments view')
 
 @login_required(login_url='login')
 def order_complete(request):
-    return render(request, 'orders/order_complete.html')
+    
+    order_number = request.GET.get('order_no')
+    transaction_id = request.GET.get('trans_id')
+    
+    try:
+        order = Order.objects.get(order_number=order_number, payment__transaction_id=transaction_id, is_ordered=True)
+        ordered_food = OrderedFood.objects.filter(order=order)
+        
+        subtotal = 0
+        for item in ordered_food:
+            subtotal += (item.price * item.quantity)
+        
+        tax_data = json.loads(order.tax_data)
+        print(tax_data)
+        
+        context = {
+            'order': order,
+            'ordered_food': ordered_food,
+            'subtotal': subtotal,
+            'tax_data': tax_data,
+        }
+        return render(request, 'orders/order_complete.html',context)
+    
+    except:
+        
+        return redirect ('home')
+    
+    
+    
     
     
 

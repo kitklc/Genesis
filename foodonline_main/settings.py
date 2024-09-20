@@ -162,7 +162,7 @@ EMAIL_PORT = config('EMAIL_PORT',cast=int)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD= 'nbgr komu vouv iwsy' 
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'kolia elengi <claude.kitenge@gmail.com>'
+DEFAULT_FROM_EMAIL = 'XXXXXXXXXXXXXXXXXX>'
 
 GOOGLE_API_KEY = config('GOOGLE_API_KEY')
 
