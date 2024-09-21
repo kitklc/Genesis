@@ -162,7 +162,7 @@ EMAIL_PORT = config('EMAIL_PORT',cast=int)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD= 'nbgr komu vouv iwsy' 
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'XXXXXXXXXXXXXXXXXX>'
+DEFAULT_FROM_EMAIL = 'kolia elengi <claude.kitenge@gmail.com>'
 
 GOOGLE_API_KEY = config('GOOGLE_API_KEY')
 
@@ -173,5 +173,3 @@ GDAL_LIBRARY_PATH = os.path.join(BASE_DIR, 'env\Lib\site-packages\osgeo\gdal.dll
 
 
 PAYPAL_CLIENT_ID = config('PAYPAL_CLIENT_ID')
-
-SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
