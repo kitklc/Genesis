@@ -9,7 +9,7 @@ from menu.models import FoodItem
 from .forms import OrderForm
 from .models import Order, OrderedFood, Payment
 import simplejson as json
-from .utils import generate_order_number
+from .utils import generate_order_number,order_total_by_vendor
 from accounts.utils import send_notification
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode
@@ -135,13 +135,15 @@ def payments(request):
             ordered_food.save()
 
         # SEND ORDER CONFIRMATION EMAIL TO THE CUSTOMER
-        mail_subject = 'Thank you for ordering with us.'
+        mail_subject = "Merci d'avoir commandé chez nous."
         mail_template = 'orders/order_confirmation_email.html'
 
         ordered_food = OrderedFood.objects.filter(order=order)
         customer_subtotal = 0
         for item in ordered_food:
             customer_subtotal += (item.price * item.quantity)
+        
+        tax_data = json.loads(order.tax_data)
         
         context = {
             'user': request.user,
@@ -150,6 +152,7 @@ def payments(request):
             'ordered_food': ordered_food,
             'domain': get_current_site(request),
             'customer_subtotal': customer_subtotal,
+            'tax_data': tax_data,
             
         }
         send_notification(mail_subject, mail_template, context)
@@ -178,7 +181,9 @@ def payments(request):
                     'domain': get_current_site(request),
                     'uid': uidb64,
                     'token': token,
-                    
+                    'vendor_subtotal': order_total_by_vendor(order, i.fooditem.vendor.id)['subtotal'],
+                    'tax_data': order_total_by_vendor(order, i.fooditem.vendor.id)['tax_dict'],
+                    'vendor_grand_total': order_total_by_vendor(order, i.fooditem.vendor.id)['grand_total'],
                     
                 }
                 send_notification(mail_subject, mail_template, context)
